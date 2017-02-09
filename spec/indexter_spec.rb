@@ -8,15 +8,15 @@ RSpec.describe Indexter do
 
   describe 'Indexter::Validator' do
     describe '#validate' do
-      context 'with no missing indexes' do
+      let(:result) { Indexter::Validator.new.validate }
 
-        specify { expect(Indexter::Validator.new.validate).to be_empty }
-      end
+      # Fields that end in _id
+      specify { expect(result.fetch('address')).to include 'property_id' }
+      specify { expect(result.fetch('address')).not_to include 'user_id' }
 
-      context 'with missing indexes' do
-
-        specify { expect(Indexter::Validator.new.validate).not_to be_empty }
-      end
+      # Fields that end in _uuid
+      specify { expect(result.fetch('address')).not_to include 'first_uuid' }
+      specify { expect(result.fetch('address')).to include 'second_uuid' }
     end
   end
 end
