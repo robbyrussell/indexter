@@ -1,11 +1,22 @@
 require "spec_helper"
+require 'indexter'
 
 RSpec.describe Indexter do
-  it "has a version number" do
-    expect(Indexter::VERSION).not_to be nil
+  describe '#version' do
+    specify { expect(Indexter::VERSION).not_to be nil }
   end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+  describe 'Indexter::Validator' do
+    describe '#validate' do
+      context 'with no missing indexes' do
+
+        specify { expect(Indexter::Validator.new.validate).to be_empty }
+      end
+
+      context 'with missing indexes' do
+
+        specify { expect(Indexter::Validator.new.validate).not_to be_empty }
+      end
+    end
   end
 end

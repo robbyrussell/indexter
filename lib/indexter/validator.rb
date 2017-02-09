@@ -1,6 +1,13 @@
+require 'active_record'
+
 module Indexter
   class Validator
+    # Any columns suffixed with these strings are possible foreign keys
+    # TODO: Configurable
     COL_SUFFIX = ['_id', '_uuid'].freeze
+
+    # These are tables we don't care to check
+    # TODO: Configurable
     EXCLUDED   = ['remote_fields',
                   'schema_migrations',
                   'taggings'].freeze
@@ -16,7 +23,9 @@ module Indexter
       # Reject any tables that have empty results. We don't care about them, they're not missing indexes
       result.delete_if { |table, missing| missing.empty? }
 
-      puts result.inspect
+      # Returns a hash of the results, where the key is the table name, and the value is an array of
+      # possibly-missing indexes
+      result
     end
 
     private
