@@ -7,11 +7,10 @@ Gem::Specification.new do |spec|
   spec.name          = "indexter"
   spec.version       = Indexter::VERSION
   spec.authors       = ["Chris Cummer"]
-  spec.email         = ["chris@unbounce.com"]
+  spec.email         = ["chriscummer@me.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Checks databases tables for indexes on foreign keys.}
+  spec.homepage      = "httpis://github.com/senorprogrammer/indexter"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -31,6 +30,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.14"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "rake", "~> 12.0"
+  spec.add_development_dependency "rspec", "~> 3.5"
 end
