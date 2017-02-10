@@ -13,7 +13,7 @@ ActiveRecord::Schema.define do
     t.string :first_uuid
     t.string :second_uuid
 
-    t.timestamps
+    t.timestamps null: false
   end
 
   add_index :address, :user_id
