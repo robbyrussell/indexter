@@ -2,9 +2,7 @@
   <img src='assets/inDexter_logo.jpg' width="600" height="186" alt="inDexter logo" title="inDexter" />
 </p>
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/indexter`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A gem for discovering foreign key indexes that may be missing from your Rails project. Don't use this yet. It doesn't work. It's only just begun.
 
 ## Installation
 
@@ -24,7 +22,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Don't. Honestly, it doesn't work yet. You'll just be disappointed.
 
 ## Development
 
