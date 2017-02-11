@@ -29,9 +29,10 @@ RSpec.describe Indexter do
       end
 
       context 'with custom' do
-        let(:validator) { Indexter::Validator.new('_id', ['table_a', 'table_b']) }
+        let(:exclusions) { ['table_a', 'table_b'] }
+        let(:validator) { Indexter::Validator.new('_id', exclusions) }
 
-        specify { expect(validator.exclusions).to eq ['table_a', 'table_b'] }
+        specify { expect(validator.exclusions).to eq exclusions }
       end
     end
 

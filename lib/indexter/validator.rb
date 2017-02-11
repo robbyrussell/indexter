@@ -4,11 +4,8 @@ module Indexter
   class Validator
     attr_reader :suffixes, :exclusions
 
-    # Any columns suffixed with these strings are possible foreign keys
-    DEFAULT_SUFFIXES = ['_id', '_uuid'].freeze
-
-    # These are tables we don't care to check
-    DEFAULT_EXCLUSIONS   = ['schema_migrations'].freeze
+    DEFAULT_SUFFIXES   = ['_id', '_uuid'].freeze
+    DEFAULT_EXCLUSIONS = ['schema_migrations'].freeze
 
     def initialize(suffixes = DEFAULT_SUFFIXES, exclusions = DEFAULT_EXCLUSIONS)
       @suffixes   = Array(suffixes)
