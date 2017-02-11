@@ -13,7 +13,7 @@ module Indexter
     end
 
     def validate
-      result = missing_indexes(tables, indexes)
+      result = missing_indexes(tables)
 
       # Returns a hash of the results, where the key is the table name, and the value is an array of
       # possibly-missing indexes
@@ -22,11 +22,11 @@ module Indexter
 
     private
 
-      def missing_indexes(tbls, idxs)
+      def missing_indexes(tbls)
         # Check the intersection between what we expect to have indexes on and what we actually have
         # indexes on. If the set is not empty, we might be missing an index
         result = tbls.inject({}) do |acc, table|
-          acc[table] = (id_columns(table) - idxs(table))
+          acc[table] = (id_columns(table) - indexes(table))
           acc
         end
 
