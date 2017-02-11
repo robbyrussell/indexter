@@ -2,7 +2,7 @@
   <img src='assets/inDexter_logo.jpg' width="600" height="186" alt="inDexter logo" title="inDexter" />
 </p>
 
-A gem for discovering foreign key indexes that may be missing from your Rails project. **Don't use this yet. It won't work for you.** It's only just begun.
+A gem for discovering foreign key indexes that may be missing from your Rails project. I don't recommend using this yet, it's only just begun.
 
 
 ### Example
