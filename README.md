@@ -17,7 +17,7 @@ ActiveRecord::Schema.define do
     t.integer :property_id
   end
 
-  add_index :address, :user_id
+  add_index :addresses, :user_id
 end
 ```
 
