@@ -7,7 +7,7 @@ A gem for discovering foreign key indexes that may be missing from your Rails pr
 
 ### Example
 
-Given a Rails table like:
+Given a Rails table like so:
 
 ```
 ActiveRecord::Schema.define do
@@ -22,13 +22,13 @@ ActiveRecord::Schema.define do
 end
 ```
 
-inDexter will return a result like this:
+inDexter will return a hash:
 
 ```
 { "addresses" => ["property_id"] }
 ```
 
-which tells you that you might want to add an index on table `addresses` for the `property_id` column. It does not mention the `user_id` column, because that one already has an index.
+which indicated that you that you might want to add an index on table `addresses` for the `property_id` column.
 
 
 ## Installation
@@ -52,7 +52,7 @@ Or install it yourself as:
 
 Don't. Honestly, it's not a great experience yet. You'll just be disappointed.
 
-But if you really, really want to, after loading the gem:
+But if you really want to, after loading the gem:
 
 ```
 $ rails c
