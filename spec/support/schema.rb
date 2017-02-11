@@ -13,9 +13,13 @@ ActiveRecord::Schema.define do
     t.string :first_uuid
     t.string :second_uuid
 
+    t.string :alpha_cats
+    t.string :beta_cats
+
     t.timestamps null: false
   end
 
   add_index :address, :user_id
   add_index :address, :first_uuid
+  add_index :address, :alpha_cats
 end

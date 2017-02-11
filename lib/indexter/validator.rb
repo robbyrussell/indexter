@@ -2,15 +2,18 @@ require 'active_record'
 
 module Indexter
   class Validator
+    attr_reader :suffixes, :exclusions
+
     # Any columns suffixed with these strings are possible foreign keys
-    # TODO: Configurable
-    COL_SUFFIX = ['_id', '_uuid'].freeze
+    DEFAULT_SUFFIXES = ['_id', '_uuid'].freeze
 
     # These are tables we don't care to check
-    # TODO: Configurable
-    EXCLUDED   = ['remote_fields',
-                  'schema_migrations',
-                  'taggings'].freeze
+    DEFAULT_EXCLUSIONS   = ['schema_migrations'].freeze
+
+    def initialize(suffixes = DEFAULT_SUFFIXES, exclusions = DEFAULT_EXCLUSIONS)
+      @suffixes   = Array(suffixes)
+      @exclusions = Array(exclusions)
+    end
 
     def validate
       # Check the intersection between what we expect to have indexes on and what we actually have
@@ -32,20 +35,20 @@ module Indexter
 
       # Returns a list of all the tables in the database (excluding the ones we don't care about)
       def tables
-        ActiveRecord::Base.connection.tables - EXCLUDED
+        ActiveRecord::Base.connection.tables - @exclusions
       end
 
       # These are the columns we expect to have an index on that end in COL_SUFFIX
       def id_columns(table)
         ActiveRecord::Base.connection.columns(table).select do |column|
-          column.name.end_with? *COL_SUFFIX
+          column.name.end_with? *@suffixes
         end.map(&:name)
       end
 
       # These are the columns we have indexes on that also end in COL_SUFFIX
       def indexes(table)
         ActiveRecord::Base.connection.indexes(table).map do |idx_def|
-          idx_def.columns.select { |col| col.end_with? *COL_SUFFIX }
+          idx_def.columns.select { |col| col.end_with? *@suffixes }
         end.flatten
       end
   end
