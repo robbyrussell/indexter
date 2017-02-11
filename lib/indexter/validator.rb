@@ -13,15 +13,7 @@ module Indexter
     end
 
     def validate
-      # Check the intersection between what we expect to have indexes on and what we actually have
-      # indexes on. If the set is not empty, we might be missing an index
-      result = tables.inject({}) do |acc, table|
-        acc[table] = (id_columns(table) - indexes(table))
-        acc
-      end
-
-      # Reject any tables that have empty results. We don't care about them, they're not missing indexes
-      result.delete_if { |table, missing| missing.empty? }
+      result = missing_indexes(tables, indexes)
 
       # Returns a hash of the results, where the key is the table name, and the value is an array of
       # possibly-missing indexes
@@ -29,6 +21,18 @@ module Indexter
     end
 
     private
+
+      def missing_indexes(tbls, idxs)
+        # Check the intersection between what we expect to have indexes on and what we actually have
+        # indexes on. If the set is not empty, we might be missing an index
+        result = tbls.inject({}) do |acc, table|
+          acc[table] = (id_columns(table) - idxs(table))
+          acc
+        end
+
+        # Reject any tables that have empty results. We don't care about them, they're not missing indexes
+        result.delete_if { |table, missing| missing.empty? }
+      end
 
       # Returns a list of all the tables in the database (excluding the ones we don't care about)
       def tables
