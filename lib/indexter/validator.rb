@@ -28,11 +28,11 @@ module Indexter
           acc
         end
 
-        # Reject any tables that have empty results. We don't care about them, they're not missing indexes
-        result.delete_if { |table, missing| missing.empty? }
+        # Reject any tables that have empty results
+        result.delete_if { |_, missing| missing.empty? }
       end
 
-      # Returns a list of all the tables in the database (excluding the ones we don't care about)
+      # Returns a list of all the tables in the database that are analysable
       def tables
         ActiveRecord::Base.connection.tables - @exclusions
       end
