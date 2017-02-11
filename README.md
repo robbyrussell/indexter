@@ -4,6 +4,7 @@
 
 A gem for discovering foreign key indexes that may be missing from your Rails project. **Don't use this yet. It won't work for you.** It's only just begun.
 
+
 ### Example
 
 Given a Rails table like:
@@ -29,6 +30,7 @@ inDexter will return a result like this:
 
 which tells you that you might want to add an index on table `addresses` for the `property_id` column. It does not mention the `user_id` column, because that one already has an index.
 
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -45,19 +47,31 @@ Or install it yourself as:
 
     $ gem install indexter
 
+
 ## Usage
 
-Don't. Honestly, it doesn't work yet. You'll just be disappointed.
+Don't. Honestly, it's not a great experience yet. You'll just be disappointed.
 
-## Development
+But if you really, really want to, after loading the gem:
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```
+$ rails c
+irb(main):001:0> Indexter::Validator.new.validate
+=> {}
+```
+In that example the project has no missing indexes.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```
+$ rails c
+irb(main):001:0> Indexter::Validator.new.validate
+=> {"users"=>["active_company_id"]}
+```
+In that example the `users` table is missing an index on `active_company_id`.
+
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/Chris Cummer/indexter. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at [Github: inDexter](https://github.com/senorprogrammer/indexter). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
