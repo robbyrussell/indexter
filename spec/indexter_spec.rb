@@ -41,19 +41,21 @@ RSpec.describe Indexter do
         let(:result) { Indexter::Validator.new.validate }
 
         # Fields that end in _id
-        specify { expect(result.fetch('address')).to include 'property_id' }
-        specify { expect(result.fetch('address')).not_to include 'user_id' }
+        specify { expect(result.fetch('addresses')).to include 'property_id' }
+        specify { expect(result.fetch('addresses')).not_to include 'user_id' }
+
+        specify { puts result }
 
         # Fields that end in _uuid
-        specify { expect(result.fetch('address')).not_to include 'first_uuid' }
-        specify { expect(result.fetch('address')).to include 'second_uuid' }
+        specify { expect(result.fetch('addresses')).not_to include 'first_uuid' }
+        specify { expect(result.fetch('addresses')).to include 'second_uuid' }
       end
 
       context 'with custom suffixes' do
         let(:result) { Indexter::Validator.new('_cats').validate }
 
-        specify { expect(result.fetch('address')).not_to include 'alpha_cats'}
-        specify { expect(result.fetch('address')).to include 'beta_cats'}
+        specify { expect(result.fetch('addresses')).not_to include 'alpha_cats'}
+        specify { expect(result.fetch('addresses')).to include 'beta_cats'}
       end
     end
   end

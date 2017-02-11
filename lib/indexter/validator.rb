@@ -13,11 +13,9 @@ module Indexter
     end
 
     def validate
-      result = missing_indexes(tables)
-
       # Returns a hash of the results, where the key is the table name, and the value is an array of
       # possibly-missing indexes
-      result
+      missing_indexes(tables)
     end
 
     private

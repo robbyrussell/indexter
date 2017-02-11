@@ -2,7 +2,32 @@
   <img src='assets/inDexter_logo.jpg' width="600" height="186" alt="inDexter logo" title="inDexter" />
 </p>
 
-A gem for discovering foreign key indexes that may be missing from your Rails project. Don't use this yet. It doesn't work. It's only just begun.
+A gem for discovering foreign key indexes that may be missing from your Rails project. **Don't use this yet. It won't work for you.** It's only just begun.
+
+### Example
+
+Given a Rails table like:
+
+```
+ActiveRecord::Schema.define do
+  create_table :addresses, :force => true do |t|
+    t.string :street
+    ...
+    t.integer :user_id
+    t.integer :property_id
+  end
+
+  add_index :address, :user_id
+end
+```
+
+inDexter will return a result like this:
+
+```
+{ "addresses" => ["property_id"] }
+```
+
+which tells you that you might want to add an index on table `addresses` for the `property_id` column. It does not mention the `user_id` column, because that one already has an index.
 
 ## Installation
 
