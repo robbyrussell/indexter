@@ -24,7 +24,7 @@ end
 inDexter will return a hash:
 
 ```
-{ "addresses" => ["property_id"] }
+{:suffixes=>["_id", "_uuid"], :exclusions=>["schema_migrations"], :missing=>{"addresses" => ["property_id"]}}
 ```
 
 which indicated that you that you might want to add an index on table `addresses` for the `property_id` column.
@@ -54,14 +54,14 @@ Or install it yourself as:
 ```
 $ rails c
 irb(main):001:0> Indexter::Validator.new.validate
-=> {}
+=> {:suffixes=>["_id", "_uuid"], :exclusions=>["schema_migrations"], :missing=>{}}
 ```
 In that example the project has no missing indexes.
 
 ```
 $ rails c
 irb(main):001:0> Indexter::Validator.new.validate
-=> {"users"=>["active_company_id"]}
+=> {:suffixes=>["_id", "_uuid"], :exclusions=>["schema_migrations"], :missing=>{"users"=>["active_company_id"]}}
 ```
 In that example the `users` table is missing an index on `active_company_id`.
 
@@ -69,13 +69,13 @@ In that example the `users` table is missing an index on `active_company_id`.
 
 ```
 $ bundle exec rake indexter:validate
-{}
+{:suffixes=>["_id", "_uuid"], :exclusions=>["schema_migrations"], :missing=>{}}
 ```
 In that example the project has no missing indexes.
 
 ```
 $ bundle exec rake indexter:validate
-{"users"=>["active_company_id"]}
+{:suffixes=>["_id", "_uuid"], :exclusions=>["schema_migrations"], :missing=>{"users"=>["active_company_id"]}}
 ```
 In that example the `users` table is missing an index on `active_company_id`.
 
