@@ -7,7 +7,7 @@ module Indexter
     DEFAULT_SUFFIXES   = ['_id', '_uuid'].freeze
     DEFAULT_EXCLUSIONS = ['schema_migrations'].freeze
 
-    def initialize(suffixes = DEFAULT_SUFFIXES, exclusions = DEFAULT_EXCLUSIONS)
+    def initialize(suffixes: DEFAULT_SUFFIXES, exclusions: DEFAULT_EXCLUSIONS)
       @suffixes   = Array(suffixes)
       @exclusions = Array(exclusions)
     end
@@ -16,7 +16,6 @@ module Indexter
       # Returns a hash of the results, where the key is the table name, and the value is an array of
       # possibly-missing indexes
       missing = missing_indexes(tables)
-
       concat_results(missing)
     end
 
@@ -36,7 +35,7 @@ module Indexter
 
       # Returns a list of all the tables in the database that are analysable
       def tables
-        ActiveRecord::Base.connection.tables - @exclusions
+        ActiveRecord::Base.connection.data_sources - @exclusions
       end
 
       # These are the columns we expect to have an index on that end in COL_SUFFIX

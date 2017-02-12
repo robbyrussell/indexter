@@ -15,9 +15,10 @@ RSpec.describe Indexter do
       end
 
       context 'with custom' do
-        let(:validator) { Indexter::Validator.new('_cats') }
+        let(:suffixes)  { '_cats' }
+        let(:validator) { Indexter::Validator.new(suffixes: suffixes) }
 
-        specify { expect(validator.suffixes).to eq ['_cats'] }
+        specify { expect(validator.suffixes).to eq [suffixes] }
       end
     end
 
@@ -30,7 +31,7 @@ RSpec.describe Indexter do
 
       context 'with custom' do
         let(:exclusions) { ['table_a', 'table_b'] }
-        let(:validator) { Indexter::Validator.new('_id', exclusions) }
+        let(:validator)  { Indexter::Validator.new(suffixes: '_id', exclusions: exclusions) }
 
         specify { expect(validator.exclusions).to eq exclusions }
       end
@@ -38,24 +39,30 @@ RSpec.describe Indexter do
 
     describe '#validate' do
       context 'with defaults' do
-        let(:result) { Indexter::Validator.new.validate }
+        let(:validator) { Indexter::Validator.new() }
+        let(:result)    { validator.validate }
+
+        specify { expect(result.fetch(:suffixes)).to eq validator.suffixes }
+        specify { expect(result.fetch(:exclusions)).to eq validator.exclusions }
 
         # Fields that end in _id
-        specify { expect(result.fetch('addresses')).to include 'property_id' }
-        specify { expect(result.fetch('addresses')).not_to include 'user_id' }
-
-        specify { puts result }
+        specify { expect(result.fetch(:missing).fetch('addresses')).to include 'property_id' }
+        specify { expect(result.fetch(:missing).fetch('addresses')).not_to include 'user_id' }
 
         # Fields that end in _uuid
-        specify { expect(result.fetch('addresses')).not_to include 'first_uuid' }
-        specify { expect(result.fetch('addresses')).to include 'second_uuid' }
+        specify { expect(result.fetch(:missing).fetch('addresses')).not_to include 'first_uuid' }
+        specify { expect(result.fetch(:missing).fetch('addresses')).to include 'second_uuid' }
       end
 
       context 'with custom suffixes' do
-        let(:result) { Indexter::Validator.new('_cats').validate }
+        let(:validator) { Indexter::Validator.new(suffixes: '_cats') }
+        let(:result)    { validator.validate }
 
-        specify { expect(result.fetch('addresses')).not_to include 'alpha_cats'}
-        specify { expect(result.fetch('addresses')).to include 'beta_cats'}
+        specify { expect(result.fetch(:suffixes)).to eq validator.suffixes }
+        specify { expect(result.fetch(:exclusions)).to eq validator.exclusions }
+
+        specify { expect(result.fetch(:missing).fetch('addresses')).not_to include 'alpha_cats'}
+        specify { expect(result.fetch(:missing).fetch('addresses')).to include 'beta_cats'}
       end
     end
   end
