@@ -15,7 +15,9 @@ module Indexter
     def validate
       # Returns a hash of the results, where the key is the table name, and the value is an array of
       # possibly-missing indexes
-      missing_indexes(tables)
+      missing = missing_indexes(tables)
+
+      concat_results(missing)
     end
 
     private
@@ -49,6 +51,14 @@ module Indexter
         ActiveRecord::Base.connection.indexes(table).map do |idx_def|
           idx_def.columns.select { |col| col.end_with? *@suffixes }
         end.flatten
+      end
+
+      def concat_results(missing)
+        {
+          suffixes: @suffixes,
+          exclusions: @exclusions,
+          missing: missing
+        }
       end
   end
 end
