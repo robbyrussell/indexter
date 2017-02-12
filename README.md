@@ -2,8 +2,7 @@
   <img src='assets/inDexter_logo.jpg' width="600" height="186" alt="inDexter logo" title="inDexter" />
 </p>
 
-A gem for discovering foreign key indexes that may be missing from your Rails project. I don't recommend using this yet, it's only just begun.
-
+A gem for discovering foreign key indexes that may be missing from your Rails project.
 
 ### Example
 
@@ -50,9 +49,7 @@ Or install it yourself as:
 
 ## Usage
 
-Don't. Honestly, it's not a great experience yet. You'll just be disappointed.
-
-But if you really want to, after loading the gem:
+### Rails Console
 
 ```
 $ rails c
@@ -65,6 +62,20 @@ In that example the project has no missing indexes.
 $ rails c
 irb(main):001:0> Indexter::Validator.new.validate
 => {"users"=>["active_company_id"]}
+```
+In that example the `users` table is missing an index on `active_company_id`.
+
+### Rake Task
+
+```
+$ bundle exec rake indexter:validate
+{}
+```
+In that example the project has no missing indexes.
+
+```
+$ bundle exec rake indexter:validate
+{"users"=>["active_company_id"]}
 ```
 In that example the `users` table is missing an index on `active_company_id`.
 
