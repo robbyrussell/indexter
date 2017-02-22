@@ -2,21 +2,24 @@ require 'active_record'
 
 module Indexter
   class Validator
-    attr_reader :suffixes, :exclusions
+    attr_reader :suffixes, :exclusions, :formatter
 
     DEFAULT_SUFFIXES   = ['_id', '_uuid'].freeze
     DEFAULT_EXCLUSIONS = ['schema_migrations'].freeze
 
-    def initialize(suffixes: DEFAULT_SUFFIXES, exclusions: DEFAULT_EXCLUSIONS)
+    def initialize(suffixes: DEFAULT_SUFFIXES, exclusions: DEFAULT_EXCLUSIONS, formatter: nil)
       @suffixes   = Array(suffixes)
       @exclusions = Array(exclusions)
+      @formatter  = formatter
     end
 
     def validate
       # Returns a hash of the results, where the key is the table name, and the value is an array of
       # possibly-missing indexes
       missing = missing_indexes(tables)
-      concat_results(missing)
+      results = concat_results(missing)
+
+      formatter ? formatter.new.format(results) : results
     end
 
     private
@@ -35,7 +38,11 @@ module Indexter
 
       # Returns a list of all the tables in the database that are analysable
       def tables
-        ActiveRecord::Base.connection.data_sources - @exclusions
+        if ActiveRecord::Base.connection.respond_to? :data_sources
+          ActiveRecord::Base.connection.data_sources - @exclusions
+        else
+          ActiveRecord::Base.connection.tables - @exclusions
+        end
       end
 
       # These are the columns we expect to have an index on that end in COL_SUFFIX

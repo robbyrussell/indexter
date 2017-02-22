@@ -32,6 +32,8 @@ Gem::Specification.new do |spec|
   # Production dependencies
   spec.add_dependency "activerecord"
   spec.add_dependency "sqlite3"
+  spec.add_dependency "rainbow"
+  spec.add_dependency "terminal-table"
 
   # Development dependencies
   # spec.add_development_dependency "bundler", "~> 1.13.7"

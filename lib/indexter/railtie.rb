@@ -9,12 +9,12 @@ module Indexter
       namespace :indexter do
         desc "Checks the database for missing foreign key indexes"
         task validate: :environment do
-          result = Indexter::Validator.new.validate
-          puts result
+          formatter = Indexter::Formatters::Table
+          puts Indexter::Validator.new(formatter: formatter).validate
         end
       end
 
-      task :indexter => ['indexter:validate']
+      task indexter: ['indexter:validate']
     end
   end
 end
