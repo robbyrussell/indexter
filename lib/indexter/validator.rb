@@ -4,25 +4,33 @@ module Indexter
   class Validator
     attr_reader :suffixes, :exclusions, :formatter
 
-    DEFAULT_SUFFIXES   = ['_id', '_uuid'].freeze
+    DEFAULT_FORMATTER  = 'hash'
     DEFAULT_EXCLUSIONS = ['schema_migrations'].freeze
+    DEFAULT_SUFFIXES   = ['_id', '_uuid'].freeze
 
     def initialize(suffixes: DEFAULT_SUFFIXES, exclusions: DEFAULT_EXCLUSIONS, formatter: nil)
       @suffixes   = Array(suffixes)
       @exclusions = Array(exclusions)
-      @formatter  = formatter
+      @formatter  = find_formatter(formatter: formatter)
     end
 
     def validate
-      # Returns a hash of the results, where the key is the table name, and the value is an array of
-      # possibly-missing indexes
       missing = missing_indexes(tables)
       results = concat_results(missing)
 
-      formatter ? formatter.new.format(results) : results
+      formatter.new.format(results)
     end
 
     private
+
+      def find_formatter(formatter: nil)
+        formatter = DEFAULT_FORMATTER unless formatter
+        klass_name = "Indexter::Formatters::#{formatter.to_s.camelize}"
+        klass      = klass_name.constantize
+      rescue NameError
+        # If an un-known formatter is passed here, fall back to the hash
+        Indexter::Formatters::Hash
+      end
 
       def missing_indexes(tbls)
         # Check the intersection between what we expect to have indexes on and what we actually have
