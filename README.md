@@ -21,7 +21,7 @@ ActiveRecord::Schema.define do
 end
 ```
 
-inDexter will return a hash:
+By default, **inDexter** will return a hash:
 
 ```
 {:suffixes=>["_id", "_uuid"], :exclusions=>["schema_migrations"], :missing=>{"addresses" => ["property_id"]}}
@@ -79,6 +79,29 @@ $ bundle exec rake indexter:validate
 ```
 In that example the `users` table is missing an index on `active_company_id`.
 
+## Formatters
+
+Out of the box, inDexter returns a Ruby hash of the results. But maybe that's not what you want? Fortunately inDexter also provides a number of formatting options:
+
+* `hash`: the default option, returns a Ruby hash
+* `json`: renders the output as a JSON string
+* `pass_fail`: like a Unix process, returns 0 if no missing index, n if missing indexes, where n is the number of missing indexes
+* `table`: renders the output as an ASCII-art table
+
+### Usage
+
+#### Rails Console
+
+```
+$ rails c
+irb(main):001:0> Indexter::Validator.new(formatter: 'table').validate
+```
+
+#### Rake Task
+
+```
+$ bundle exec rake 'indexter:validate[table]'
+```
 
 ## Contributing
 
