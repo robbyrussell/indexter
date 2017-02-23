@@ -5,8 +5,6 @@ module Indexter
   class Railtie < Rails::Railtie
     railtie_name :indexter
 
-    DEFAULT_FORMATTER = 'pass_fail'
-
     rake_tasks do
       namespace :indexter do
         desc "Checks the database for missing foreign key indexes"
