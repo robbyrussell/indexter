@@ -2,7 +2,7 @@ require 'active_record'
 
 module Indexter
   class Validator
-    attr_reader :suffixes, :exclusions, :formatter
+    attr_reader :suffixes, :exclusions, :formatter, :results
 
     DEFAULT_FORMATTER  = 'hash'
     DEFAULT_EXCLUSIONS = ['schema_migrations'].freeze
@@ -16,9 +16,9 @@ module Indexter
 
     def validate
       missing = missing_indexes(tables)
-      results = concat_results(missing)
+      output = concat_results(missing)
 
-      formatter.new.format(results)
+      results = formatter.new.format(output)
     end
 
     private
