@@ -53,14 +53,14 @@ Or install it yourself as:
 
 ```
 $ rails c
-irb(main):001:0> Indexter::Validator.new.validate
+irb(main):001:0> Indexter.validate
 => {:suffixes=>["_id", "_uuid"], :exclusions=>["schema_migrations"], :missing=>{}}
 ```
 In that example the project has no missing indexes.
 
 ```
 $ rails c
-irb(main):001:0> Indexter::Validator.new.validate
+irb(main):001:0> Indexter.validate
 => {:suffixes=>["_id", "_uuid"], :exclusions=>["schema_migrations"], :missing=>{"users"=>["active_company_id"]}}
 ```
 In that example the `users` table is missing an index on `active_company_id`.
@@ -79,6 +79,14 @@ $ bundle exec rake indexter:validate
 ```
 In that example the `users` table is missing an index on `active_company_id`.
 
+## Exclusions
+
+Often there are tables or specific columns in a table that should be excluded from the analysis. A column that looks like an `id` column but you know is never used in a query. A table, like `schema_migrations`, that doesn't need to be examined. For that there's exclusions.
+
+### Excluding a Table
+
+### Excluding Columns
+
 ## Formatters
 
 Out of the box, inDexter returns a Ruby hash of the results. But maybe that's not what you want? Fortunately inDexter also provides a number of formatting options:
@@ -94,7 +102,7 @@ Out of the box, inDexter returns a Ruby hash of the results. But maybe that's no
 
 ```
 $ rails c
-irb(main):001:0> Indexter::Validator.new(formatter: 'table').validate
+irb(main):001:0> Indexter.validate(formatter: :table)
 ```
 
 #### Rake Task

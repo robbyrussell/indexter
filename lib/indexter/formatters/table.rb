@@ -16,7 +16,7 @@ module Indexter
 
         headings = ['Table', 'Column'].map { |col| col.color(:blue).bright }
 
-        Terminal::Table.new headings: headings, rows: rows
+        Terminal::Table.new(headings: headings, rows: rows).to_s
       end
 
     end

@@ -2,11 +2,13 @@ require 'active_record'
 
 module Indexter
   class Validator
-    attr_reader :suffixes, :exclusions, :formatter, :results
+    attr_reader :exclusions, :formatter, :results, :suffixes 
 
     DEFAULT_FORMATTER  = 'hash'
     DEFAULT_EXCLUSIONS = ['schema_migrations'].freeze
     DEFAULT_SUFFIXES   = ['_id', '_uuid'].freeze
+
+    # -------------------- Instance Methods --------------------
 
     def initialize(suffixes: DEFAULT_SUFFIXES, exclusions: DEFAULT_EXCLUSIONS, formatter: nil)
       @suffixes   = Array(suffixes)

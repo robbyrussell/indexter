@@ -7,6 +7,13 @@ RSpec.describe Indexter do
   end
 
   describe 'Indexter::Validator' do
+    describe '.validate' do
+      let(:result) { Indexter.validate }
+
+      specify { expect(result.fetch(:missing).fetch('addresses')).to include 'property_id' }
+      specify { expect(result.fetch(:missing).fetch('addresses')).not_to include 'first_uuid' }
+    end
+
     describe '#suffixes' do
       context 'with defaults' do
         let(:validator) { Indexter::Validator.new }
