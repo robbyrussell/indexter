@@ -10,10 +10,10 @@ module Indexter
 
     # -------------------- Instance Methods --------------------
 
-    def initialize(suffixes: DEFAULT_SUFFIXES, exclusions: DEFAULT_EXCLUSIONS, formatter: nil)
+    def initialize(suffixes: DEFAULT_SUFFIXES, exclusions: DEFAULT_EXCLUSIONS, format: nil)
       @suffixes   = Array(suffixes)
       @exclusions = Array(exclusions)
-      @formatter  = find_formatter(formatter: formatter)
+      @formatter  = find_formatter(format: format)
     end
 
     def validate
@@ -25,9 +25,9 @@ module Indexter
 
     private
 
-      def find_formatter(formatter: nil)
-        formatter = DEFAULT_FORMATTER unless formatter
-        klass_name = "Indexter::Formatters::#{formatter.to_s.camelize}"
+      def find_formatter(format: nil)
+        format     = DEFAULT_FORMATTER unless format
+        klass_name = "Indexter::Formatters::#{format.to_s.camelize}"
         klass      = klass_name.constantize
       rescue NameError
         # If an un-known formatter is passed here, fall back to the hash
