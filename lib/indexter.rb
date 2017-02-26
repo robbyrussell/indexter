@@ -1,6 +1,6 @@
-require 'indexter/version'
-require 'indexter/validator'
 require 'indexter/railtie' if defined?(Rails)
+require 'indexter/validator'
+require 'indexter/version'
 
 require 'indexter/formatters/hash'
 require 'indexter/formatters/json'
