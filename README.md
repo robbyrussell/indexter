@@ -102,7 +102,7 @@ Out of the box, inDexter returns a Ruby hash of the results. But maybe that's no
 
 ```
 $ rails c
-irb(main):001:0> Indexter.validate(formatter: :table)
+irb(main):001:0> Indexter.validate(format: :table)
 ```
 
 #### Rake Task
