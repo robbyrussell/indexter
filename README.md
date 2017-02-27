@@ -83,9 +83,24 @@ In that example the `users` table is missing an index on `active_company_id`.
 
 Often there are tables or specific columns in a table that should be excluded from the analysis. A column that looks like an `id` column but you know is never used in a query. A table, like `schema_migrations`, that doesn't need to be examined. For that there's exclusions.
 
-### Excluding a Table
+### Excluding Tables
+
+To exclude a table from analysis, pass it to the validator like so:
+
+#### Rails Console
+
+```
+exclusions = ['table_a', 'table_b']
+Indexter.validate(exclusions: exclusions)
+```
+
+#### Rake Task
+
+Exclusion arguments are not supported at this time.
 
 ### Excluding Columns
+
+TODO: Not implemented yet.
 
 ## Formatters
 
