@@ -1,3 +1,4 @@
+require 'indexter/config'
 require 'indexter/railtie' if defined?(Rails)
 require 'indexter/validator'
 require 'indexter/version'
@@ -10,8 +11,10 @@ require 'indexter/formatters/table'
 module Indexter
   extend self
 
-  def validate(suffixes: Indexter::Validator::DEFAULT_SUFFIXES, exclusions: Indexter::Validator::DEFAULT_EXCLUSIONS, format: nil)
-    obj = Indexter::Validator.new(suffixes: suffixes, exclusions: exclusions, format: format)
+  def validate(format: 'hash')
+    config = Indexter::Config.new
+    obj    = Indexter::Validator.new(config: config, format: format)
+
     obj.validate
   end
 end

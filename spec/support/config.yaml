@@ -1,0 +1,10 @@
+format: table
+exclusions:
+  - table: addresses
+    columns:
+      - property_id
+      - beta_cats
+suffixes:
+  - _id
+  - _uuid
+  - _stuff

@@ -5,28 +5,40 @@ module Indexter
     attr_reader :exclusions, :formatter, :results, :suffixes 
 
     DEFAULT_FORMATTER  = 'hash'
-    DEFAULT_EXCLUSIONS = ['schema_migrations'].freeze
+    DEFAULT_EXCLUSIONS = { 'schema_migrations' => [] }.freeze
     DEFAULT_SUFFIXES   = ['_id', '_uuid'].freeze
 
     # -------------------- Instance Methods --------------------
 
-    def initialize(suffixes: DEFAULT_SUFFIXES, exclusions: DEFAULT_EXCLUSIONS, format: nil)
-      @suffixes   = Array(suffixes)
-      @exclusions = Array(exclusions)
-      @formatter  = find_formatter(format: format)
+    def initialize(config: nil, format: nil)
+      @config    = config
+      @formatter = find_formatter(format: format)
+
+      configure
     end
 
     def validate
       missing = missing_indexes(tables)
-      output = concat_results(missing)
+      output  = concat_results(missing)
 
       results = formatter.new.format(output)
     end
 
     private
 
+      # suffixes are the column endings that indicate which column to search
+      # exclusions are lists of tables and columns to not care about
+      #
+      # Example:
+      #   { users: ['account_id', 'other_id'] }
+      #
+      def configure
+        @exclusions = @config.try(:exclusions) || DEFAULT_EXCLUSIONS
+        @suffixes   = @config.try(:suffixes)   || DEFAULT_SUFFIXES
+      end
+
       def find_formatter(format: nil)
-        format     = DEFAULT_FORMATTER unless format
+        format     = format || DEFAULT_FORMATTER
         klass_name = "Indexter::Formatters::#{format.to_s.camelize}"
         klass      = klass_name.constantize
       rescue NameError
