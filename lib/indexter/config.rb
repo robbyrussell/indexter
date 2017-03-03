@@ -13,12 +13,14 @@ require 'yaml'
 
 module Indexter
   class Config
-    attr_reader :config_file_path, :exclusions, :suffixes
+    attr_reader :config_file_path, :format, :exclusions, :suffixes
 
     DEFAULT_CONFIG_FILE = './.indexter.yaml'.freeze
+    DEFAULT_FORMAT      = 'hash'
 
     def initialize(config_file_path: nil)
       @config_file_path = config_file_path || DEFAULT_CONFIG_FILE
+      @format     = DEFAULT_FORMAT
       @exclusions = {}
       @suffixes   = []
 
@@ -34,6 +36,8 @@ module Indexter
     def configure
       data = YAML.load_stream(File.read(config_file_path))
       return unless data.any?
+
+      @format = data.first['format'] || DEFAULT_FORMAT
 
       data.first.fetch('exclusions', []).each do |hash| 
         @exclusions[hash['table']] = hash.fetch('columns', [])

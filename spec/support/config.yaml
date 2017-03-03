@@ -1,4 +1,4 @@
-format: table
+format: hash
 exclusions:
   - table: products
     columns:

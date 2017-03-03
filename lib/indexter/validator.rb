@@ -10,10 +10,8 @@ module Indexter
 
     # -------------------- Instance Methods --------------------
 
-    def initialize(config: nil, format: nil)
-      @config    = config
-      @formatter = find_formatter(format: format)
-
+    def initialize(config: nil)
+      @config = config
       configure
     end
 
@@ -33,6 +31,9 @@ module Indexter
       #   { users: ['account_id', 'other_id'] }
       #
       def configure
+        format      = @config.try(:format)     || DEFAULT_FORMATTER
+        @formatter  = find_formatter(format: format)
+
         @exclusions = @config.try(:exclusions) || DEFAULT_EXCLUSIONS
         @suffixes   = @config.try(:suffixes)   || DEFAULT_SUFFIXES
       end

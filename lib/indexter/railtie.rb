@@ -8,8 +8,9 @@ module Indexter
     rake_tasks do
       namespace :indexter do
         desc "Checks the database for missing foreign key indexes"
-        task :validate, [:format] => :environment do |t, args| 
-          puts Indexter::Validator.new(format: args[:format]).validate
+        task :validate => :environment do |t, args|
+          config = Indexter::Config.new
+          puts Indexter::Validator.new(config: config).validate
         end
       end
 

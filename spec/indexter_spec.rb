@@ -10,8 +10,6 @@ RSpec.describe Indexter do
     describe '.validate' do
       let(:result) { Indexter.validate(config_file_path: './spec/support/config.yaml') }
 
-      specify { puts ">> #{result.inspect}" }
-
       specify { expect(result.fetch(:missing).fetch('addresses')).to include 'property_id' }
       specify { expect(result.fetch(:missing).fetch('addresses')).not_to include 'first_uuid' }
     end

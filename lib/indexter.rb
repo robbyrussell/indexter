@@ -11,9 +11,9 @@ require 'indexter/formatters/table'
 module Indexter
   extend self
 
-  def validate(config_file_path: Indexter::Config::DEFAULT_CONFIG_FILE, format: 'hash')
+  def validate(config_file_path: Indexter::Config::DEFAULT_CONFIG_FILE)
     config = Indexter::Config.new(config_file_path: config_file_path)
-    obj    = Indexter::Validator.new(config: config, format: format)
+    obj    = Indexter::Validator.new(config: config)
 
     obj.validate
   end
