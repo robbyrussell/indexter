@@ -31,8 +31,6 @@ module Indexter
       #   { users: ['account_id', 'other_id'] }
       #
       def configure
-        return unless @config
-
         format      = @config.try(:format)     || DEFAULT_FORMATTER
         @formatter  = find_formatter(format: format)
 
