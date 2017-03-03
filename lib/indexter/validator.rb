@@ -61,9 +61,9 @@ module Indexter
       # Returns a list of all the tables in the database that are analysable
       def tables
         if ActiveRecord::Base.connection.respond_to? :data_sources
-          ActiveRecord::Base.connection.data_sources - @exclusions
+          ActiveRecord::Base.connection.data_sources - @exclusions.keys
         else
-          ActiveRecord::Base.connection.tables - @exclusions
+          ActiveRecord::Base.connection.tables - @exclusions.keys
         end
       end
 

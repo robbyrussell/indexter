@@ -13,8 +13,8 @@ describe Indexter::Config do
       let(:config) { Indexter::Config.new(config_file_path: custom_config) }
 
       specify { expect(config.config_file_path).to eq custom_config }
-      specify { expect(config.exclusions).to       eq({ 'addresses' => ['property_id', 'beta_cats'] }) }
-      specify { expect(config.suffixes).to         eq(['_id', '_uuid', '_stuff']) }
+      specify { expect(config.exclusions).to       eq({ 'products' => ['user_id', 'alpha_cats'] }) }
+      specify { expect(config.suffixes).to         eq(['_id', '_uuid', '_stuff', '_cats']) }
     end
   end
 

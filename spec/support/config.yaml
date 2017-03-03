@@ -1,10 +1,11 @@
 format: table
 exclusions:
-  - table: addresses
+  - table: products
     columns:
-      - property_id
-      - beta_cats
+      - user_id
+      - alpha_cats
 suffixes:
   - _id
   - _uuid
   - _stuff
+  - _cats
