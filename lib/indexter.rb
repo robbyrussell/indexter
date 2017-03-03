@@ -13,8 +13,8 @@ module Indexter
 
   def validate(config_file_path: Indexter::Config::DEFAULT_CONFIG_FILE)
     config = Indexter::Config.new(config_file_path: config_file_path)
-    obj    = Indexter::Validator.new(config: config)
+    val    = Indexter::Validator.new(config: config)
 
-    obj.validate
+    val.validate
   end
 end

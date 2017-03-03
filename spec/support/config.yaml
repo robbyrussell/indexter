@@ -4,6 +4,7 @@ exclusions:
     columns:
       - user_id
       - alpha_cats
+  - table: schema_migrations
 suffixes:
   - _id
   - _uuid
