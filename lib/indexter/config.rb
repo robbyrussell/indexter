@@ -16,15 +16,9 @@ module Indexter
     attr_reader :config_file_path, :format, :exclusions, :suffixes
 
     DEFAULT_CONFIG_FILE = './.indexter.yaml'.freeze
-    DEFAULT_FORMAT      = 'hash'
 
     def initialize(config_file_path: DEFAULT_CONFIG_FILE)
       @config_file_path = config_file_path
-
-      @format     = DEFAULT_FORMAT
-      @exclusions = {}
-      @suffixes   = []
-
       configure if exists?
     end
 
@@ -42,8 +36,9 @@ module Indexter
       @data = YAML.load_stream(File.read(config_file_path))
       return unless @data.any?
 
-      @format = @data.first['format'] || DEFAULT_FORMAT
+      @format = @data.first['format']
 
+      @exclusions = {}
       @data.first.fetch('exclusions', []).each do |hash| 
         @exclusions[hash['table']] = hash.fetch('columns', [])
       end
