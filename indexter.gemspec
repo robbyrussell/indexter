@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["chriscummer@me.com"]
 
   spec.summary       = %q{Checks databases tables for indexes on foreign keys.}
-  spec.homepage      = "httpis://github.com/senorprogrammer/indexter"
+  spec.homepage      = "https://github.com/senorprogrammer/indexter"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
