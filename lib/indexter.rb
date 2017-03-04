@@ -1,4 +1,5 @@
 require 'indexter/config'
+require 'indexter/null_config'
 require 'indexter/railtie' if defined?(Rails)
 require 'indexter/validator'
 require 'indexter/version'

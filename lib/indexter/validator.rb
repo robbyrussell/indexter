@@ -30,11 +30,13 @@ module Indexter
       #   { users: ['account_id', 'other_id'] }
       #
       def configure(config)
-        format      = config.try(:format)     || DEFAULT_FORMATTER
+        config = config || NullConfig.new
+
+        format      = config.format     || DEFAULT_FORMATTER
         @formatter  = find_formatter(format: format)
 
-        @exclusions = config.try(:exclusions) || DEFAULT_EXCLUSIONS
-        @suffixes   = config.try(:suffixes)   || DEFAULT_SUFFIXES
+        @exclusions = config.exclusions || DEFAULT_EXCLUSIONS
+        @suffixes   = config.suffixes   || DEFAULT_SUFFIXES
       end
 
       def find_formatter(format: nil)

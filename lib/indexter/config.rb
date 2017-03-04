@@ -18,8 +18,9 @@ module Indexter
     DEFAULT_CONFIG_FILE = './.indexter.yaml'.freeze
     DEFAULT_FORMAT      = 'hash'
 
-    def initialize(config_file_path: nil)
-      @config_file_path = config_file_path || DEFAULT_CONFIG_FILE
+    def initialize(config_file_path: DEFAULT_CONFIG_FILE)
+      @config_file_path = config_file_path
+
       @format     = DEFAULT_FORMAT
       @exclusions = {}
       @suffixes   = []
