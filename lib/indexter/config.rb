@@ -32,19 +32,29 @@ module Indexter
 
     private
 
-    def configure
-      @data = YAML.load_stream(File.read(config_file_path))
-      return unless @data.any?
+      def configure
+        @data = YAML.load_stream(File.read(config_file_path))
+        return unless @data.any?
 
-      @format = @data.first['format']
-
-      @exclusions = {}
-      @data.first.fetch('exclusions', []).each do |hash| 
-        @exclusions[hash['table']] = hash.fetch('columns', [])
+        load_format(@data)
+        load_exclusions(@data)
+        load_suffixes(@data)
       end
 
-      @suffixes = @data.first.fetch('suffixes', [])
-    end
+      def load_format(data)
+        @format = data.first.fetch('format', nil)
+      end
+
+      def load_exclusions(data)
+        @exclusions = data.first.fetch('exclusions', []).inject({}) do |acc, hash| 
+          acc[hash['table']] = hash.fetch('columns', [])
+          acc
+        end
+      end
+
+      def load_suffixes(data)
+        @suffixes = data.first.fetch('suffixes', [])
+      end
 
   end
 end

@@ -23,12 +23,6 @@ module Indexter
 
     private
 
-      # suffixes are the column endings that indicate which column to search
-      # exclusions are lists of tables and columns to not care about
-      #
-      # Example:
-      #   { users: ['account_id', 'other_id'] }
-      #
       def configure(config)
         config = config || NullConfig.new
 
