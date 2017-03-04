@@ -32,20 +32,52 @@ which indicated that you that you might want to add an index on table `addresses
 
 ## Installation
 
-Add this line to your application's Gemfile:
+1. Add this line to your application's Gemfile:
 
 ```ruby
 gem 'indexter'
 ```
 
-And then execute:
+2. And then execute:
 
     $ bundle
 
 Or install it yourself as:
 
     $ gem install indexter
+    
+## Configuration
+Indexter is configured by creating an `.indexter.yaml` file in the root directory of your project (at the same level as your `.gitignore` and `.ruby-version` file). 
 
+Into this file you define the output format, the tables to be excluded from analysis, and the extensions the denote the columns you want to analyze.
+
+### format
+The output format the results of the analysis should be displayed in. See **Formatters**, below, for more details.
+
+### exclusions
+A list of the tables you *do not* want to analyze.
+
+### suffixes
+A list of the column extensions that define which columns should probably be indexed.
+
+### Example
+
+```
+format: table
+exclusions:
+  - table: default_companies
+  - table: schema_migrations
+  - table: taggings
+suffixes:
+  - _id
+  - _uuid
+```
+
+Indexter provides a convenience rake task for viewing your `.indexter.yaml` config file:
+
+```
+rake indexter:config
+```
 
 ## Usage
 
@@ -79,57 +111,18 @@ $ bundle exec rake indexter:validate
 ```
 In that example the `users` table is missing an index on `active_company_id`.
 
-## Exclusions
-
-Often there are tables or specific columns in a table that should be excluded from the analysis. A column that looks like an `id` column but you know is never used in a query. A table, like `schema_migrations`, that doesn't need to be examined. For that there's exclusions.
-
-### Excluding Tables
-
-To exclude a table from analysis, pass it to the validator like so:
-
-#### Rails Console
-
-```
-exclusions = ['table_a', 'table_b']
-Indexter.validate(exclusions: exclusions)
-```
-
-#### Rake Task
-
-Exclusion arguments are not supported at this time.
-
-### Excluding Columns
-
-TODO: Not implemented yet.
-
 ## Formatters
 
-Out of the box, inDexter returns a Ruby hash of the results. But maybe that's not what you want? Fortunately inDexter also provides a number of formatting options:
+Out of the box, inDexter returns a Ruby hash of the results. But maybe that's not what you want? Fortunately inDexter also provides a number of additional formatting options:
 
 * `hash`: the default option, returns a Ruby hash
 * `json`: renders the output as a JSON string
-* `pass_fail`: like a Unix process, returns 0 if no missing index, n if missing indexes, where n is the number of missing indexes
+* `pass_fail`: like a Unix process, returns 0 if no missing index, `n` if missing indexes, where `n` is the number of missing indexes
 * `table`: renders the output as an ASCII-art table
-
-### Usage
-
-#### Rails Console
-
-```
-$ rails c
-irb(main):001:0> Indexter.validate(format: :table)
-```
-
-#### Rake Task
-
-```
-$ bundle exec rake 'indexter:validate[table]'
-```
 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at [Github: inDexter](https://github.com/senorprogrammer/indexter). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
 
 ## License
 

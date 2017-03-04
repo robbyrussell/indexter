@@ -32,19 +32,23 @@ module Indexter
       File.exists?(config_file_path)
     end
 
+    def to_yaml
+      @data.to_yaml
+    end
+
     private
 
     def configure
-      data = YAML.load_stream(File.read(config_file_path))
-      return unless data.any?
+      @data = YAML.load_stream(File.read(config_file_path))
+      return unless @data.any?
 
-      @format = data.first['format'] || DEFAULT_FORMAT
+      @format = @data.first['format'] || DEFAULT_FORMAT
 
-      data.first.fetch('exclusions', []).each do |hash| 
+      @data.first.fetch('exclusions', []).each do |hash| 
         @exclusions[hash['table']] = hash.fetch('columns', [])
       end
 
-      @suffixes = data.first.fetch('suffixes', [])
+      @suffixes = @data.first.fetch('suffixes', [])
     end
 
   end
