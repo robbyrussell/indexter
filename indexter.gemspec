@@ -3,38 +3,32 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'indexter/version'
 
-Gem::Specification.new do |spec|
-  spec.name          = "indexter"
-  spec.version       = Indexter::VERSION
-  spec.authors       = ["Chris Cummer"]
-  spec.email         = ["chriscummer@me.com"]
+Gem::Specification.new do |gem|
+  gem.name          = "indexter"
+  gem.version       = Indexter::VERSION
+  gem.authors       = ["Chris Cummer"]
+  gem.email         = ["chriscummer@me.com"]
 
-  spec.summary       = %q{Checks Rails databases tables for missing indexes on possible foreign keys.}
-  spec.homepage      = "https://github.com/senorprogrammer/indexter"
-  spec.license       = "MIT"
+  gem.summary       = "Checks Rails databases tables for missing indexes on possible foreign keys."
+  gem.description   = "Checks Rails databases tables for missing indexes on possible foreign keys."
+  gem.homepage      = "https://github.com/senorprogrammer/indexter"
+  gem.license       = "MIT"
 
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
-  # if spec.respond_to?(:metadata)
-  #   spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
-  # else
-  #   raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
-  # end
-
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+  gem.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
+
+  gem.bindir        = "exe"
+  gem.executables   = gem.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  gem.require_paths = ["lib"]
 
   # Production dependencies
-  spec.add_dependency "activerecord"
-  spec.add_dependency "sqlite3"
-  spec.add_dependency "rainbow"
-  spec.add_dependency "terminal-table"
+  gem.add_dependency "activerecord"
+  gem.add_dependency "sqlite3"
+  gem.add_dependency "rainbow"
+  gem.add_dependency "terminal-table"
 
   # Development dependencies
-  spec.add_development_dependency "rake", "~> 12.0"
-  spec.add_development_dependency "rspec", "~> 3.5"
+  gem.add_development_dependency "rake", "~> 12.0"
+  gem.add_development_dependency "rspec", "~> 3.5"
 end

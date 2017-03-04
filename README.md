@@ -29,7 +29,6 @@ By default, **inDexter** will return a hash:
 
 which indicated that you that you might want to add an index on table `addresses` for the `property_id` column.
 
-
 ## Installation
 
 1. Add this line to your application's Gemfile:
@@ -47,9 +46,11 @@ Or install it yourself as:
     $ gem install indexter
     
 ## Configuration
-Indexter is configured by creating an `.indexter.yaml` file in the root directory of your project (at the same level as your `.gitignore` and `.ruby-version` file). 
+inDexter is configured via an `.indexter.yaml` file in the root directory of your project (at the same level as your `.gitignore` and `.ruby-version` file). 
 
 Into this file you define the output format, the tables to be excluded from analysis, and the extensions the denote the columns you want to analyze.
+
+If you *don't* have in `.indexter.yaml` file, inDexter will use a set of basic defaults to generate a report. You can then use that to inform the contents of your config file.
 
 ### format
 The output format the results of the analysis should be displayed in. See **Formatters**, below, for more details.
@@ -73,7 +74,7 @@ suffixes:
   - _uuid
 ```
 
-Indexter provides a convenience rake task for viewing your `.indexter.yaml` config file:
+inDexter provides a convenience rake task for viewing your `.indexter.yaml` config file:
 
 ```
 rake indexter:config
@@ -85,14 +86,14 @@ rake indexter:config
 
 ```
 $ rails c
-irb(main):001:0> Indexter.validate
+irb(main):001:0> indexter.validate
 => {:suffixes=>["_id", "_uuid"], :exclusions=>["schema_migrations"], :missing=>{}}
 ```
 In that example the project has no missing indexes.
 
 ```
 $ rails c
-irb(main):001:0> Indexter.validate
+irb(main):001:0> indexter.validate
 => {:suffixes=>["_id", "_uuid"], :exclusions=>["schema_migrations"], :missing=>{"users"=>["active_company_id"]}}
 ```
 In that example the `users` table is missing an index on `active_company_id`.
@@ -113,7 +114,7 @@ In that example the `users` table is missing an index on `active_company_id`.
 
 ## Formatters
 
-Out of the box, inDexter returns a Ruby hash of the results. But maybe that's not what you want? Fortunately inDexter also provides a number of additional formatting options:
+Out of the box, inDexter returns a Ruby hash of the results. But perhaps that's not what you want? Fortunately inDexter also provides a number of additional formatting options:
 
 * `hash`: the default option, returns a Ruby hash
 * `json`: renders the output as a JSON string
@@ -122,7 +123,7 @@ Out of the box, inDexter returns a Ruby hash of the results. But maybe that's no
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at [Github: inDexter](https://github.com/senorprogrammer/indexter). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at [Github: inDexter](https://github.com/senorprogrammer/inDexter). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
