@@ -9,5 +9,7 @@
 /spec/reports/
 /tmp/
 
+indexter-*.gem
+
 # rspec failure tracking
 .rspec_status
