@@ -11,13 +11,12 @@ module Indexter
     # -------------------- Instance Methods --------------------
 
     def initialize(config: nil)
-      @config = config
-      configure
+      configure(config)
     end
 
     def validate
       missing = missing_indexes(tables)
-      output  = concat_results(missing)
+      output  = build_results(missing)
 
       results = formatter.new.format(output)
     end
@@ -30,12 +29,12 @@ module Indexter
       # Example:
       #   { users: ['account_id', 'other_id'] }
       #
-      def configure
-        format      = @config.try(:format)     || DEFAULT_FORMATTER
+      def configure(config)
+        format      = config.try(:format)     || DEFAULT_FORMATTER
         @formatter  = find_formatter(format: format)
 
-        @exclusions = @config.try(:exclusions) || DEFAULT_EXCLUSIONS
-        @suffixes   = @config.try(:suffixes)   || DEFAULT_SUFFIXES
+        @exclusions = config.try(:exclusions) || DEFAULT_EXCLUSIONS
+        @suffixes   = config.try(:suffixes)   || DEFAULT_SUFFIXES
       end
 
       def find_formatter(format: nil)
@@ -61,11 +60,8 @@ module Indexter
 
       # Returns a list of all the tables in the database that are analysable
       def tables
-        if ActiveRecord::Base.connection.respond_to? :data_sources
-          ActiveRecord::Base.connection.data_sources - @exclusions.keys
-        else
-          ActiveRecord::Base.connection.tables - @exclusions.keys
-        end
+        func = ActiveRecord::Base.connection.respond_to?(:data_sources) ? :data_sources : :tables
+        ActiveRecord::Base.connection.send(func) - @exclusions.keys
       end
 
       # These are the columns we expect to have an index on that end in COL_SUFFIX
@@ -82,11 +78,11 @@ module Indexter
         end.flatten
       end
 
-      def concat_results(missing)
+      def build_results(missing)
         {
-          suffixes: @suffixes,
+          suffixes:   @suffixes,
           exclusions: @exclusions,
-          missing: missing
+          missing:    missing
         }
       end
   end
