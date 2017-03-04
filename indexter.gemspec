@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Chris Cummer"]
   spec.email         = ["chriscummer@me.com"]
 
-  spec.summary       = %q{Checks databases tables for indexes on foreign keys.}
+  spec.summary       = %q{Checks Rails databases tables for missing indexes on possible foreign keys.}
   spec.homepage      = "https://github.com/senorprogrammer/indexter"
   spec.license       = "MIT"
 
