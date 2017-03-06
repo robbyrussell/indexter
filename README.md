@@ -45,7 +45,7 @@ $ bundle
 
 Or install it yourself as:
 
-```
+```ruby
 $ gem install indexter
 ```
 
@@ -67,7 +67,7 @@ A list of the column extensions that define which columns should probably be ind
 
 ### Example
 
-```
+```yaml
 format: table
 exclusions:
   - table: default_companies
@@ -80,7 +80,7 @@ suffixes:
 
 inDexter provides a convenience rake task for viewing your `.indexter.yaml` config file:
 
-```
+```ruby
 rake indexter:config
 ```
 
@@ -88,14 +88,14 @@ rake indexter:config
 
 ### Rails Console
 
-```
+```ruby
 $ rails c
 irb(main):001:0> indexter.validate
 => {:suffixes=>["_id", "_uuid"], :exclusions=>["schema_migrations"], :missing=>{}}
 ```
 In that example the project has no missing indexes.
 
-```
+```ruby
 $ rails c
 irb(main):001:0> indexter.validate
 => {:suffixes=>["_id", "_uuid"], :exclusions=>["schema_migrations"], :missing=>{"users"=>["active_company_id"]}}
@@ -104,13 +104,13 @@ In that example the `users` table is missing an index on `active_company_id`.
 
 ### Rake Task
 
-```
+```ruby
 $ bundle exec rake indexter:validate
 {:suffixes=>["_id", "_uuid"], :exclusions=>["schema_migrations"], :missing=>{}}
 ```
 In that example the project has no missing indexes.
 
-```
+```ruby
 $ bundle exec rake indexter:validate
 {:suffixes=>["_id", "_uuid"], :exclusions=>["schema_migrations"], :missing=>{"users"=>["active_company_id"]}}
 ```
