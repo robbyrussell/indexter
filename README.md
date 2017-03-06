@@ -39,12 +39,16 @@ gem 'indexter'
 
 2. And then execute:
 
-    $ bundle
+```ruby
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install indexter
-    
+```
+$ gem install indexter
+```
+
 ## Configuration
 inDexter is configured via an `.indexter.yaml` file in the root directory of your project (at the same level as your `.gitignore` and `.ruby-version` file). 
 
