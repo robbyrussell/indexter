@@ -23,10 +23,10 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   # Production dependencies
-  gem.add_dependency "activerecord"
-  gem.add_dependency "sqlite3"
-  gem.add_dependency "rainbow"
-  gem.add_dependency "terminal-table"
+  gem.add_dependency "activerecord",   ">= 3.0.0"
+  gem.add_dependency "sqlite3",        ">= 1.3.9"
+  gem.add_dependency "rainbow",        "~> 2.1.0"
+  gem.add_dependency "terminal-table", "~> 1.7.0"
 
   # Development dependencies
   gem.add_development_dependency "rake", "~> 12.0"
